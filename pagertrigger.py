@@ -8,16 +8,16 @@ from errbot import BotPlugin, botcmd
 class PagerDutyTrigger(BotPlugin):
 
     def activate(self):
-        super(BotPlugin, self).activate()
+        super(PagerDutyTrigger, self).activate()
 
     def deactivate(self):
-        super(BotPlugin, self).deactivate()
+        super(PagerDutyTrigger, self).deactivate()
 
     def get_configuration_template(self):
         return { 'SERVICE_API_KEY': 'SECRET' }
 
     def check_configuration(self, configuration):
-        super(PagerDutyTrigger, self).check_configuration(configuration)
+        pass
 
     def callback_connect(self):
         pass
@@ -28,8 +28,16 @@ class PagerDutyTrigger(BotPlugin):
     def callback_botmessage(self, message):
         pass
 
+    def get_requestor_name(self, frm):
+        if frm.fullname is not None:
+            return frm.fullname
+        elif frm.nick is not None:
+            return frm.nick
+        else:
+            return frm.person
+
     @botcmd(split_args_with=None)
-    def pager_register(self, mess, args):
+    def pager_trigger(self, mess, args):
         if not self.config:
             return "PagerDuty is not configured"
 
@@ -39,12 +47,11 @@ class PagerDutyTrigger(BotPlugin):
             'event_type': 'trigger',
             'description': 'Page via chat',
             'details': {
-                'requestor': mess.frm.person,
+                'requestor': self.get_requestor_name(mess.frm),
                 'message': " ".join(args)
             }
         }
         return json.dumps(body)
-
         # response = requests.post(PAGERDUTY_API, data=json.dumps(body))
         # if response.status_code in (200,):
         #     return "Triggered incident %s" % (response.json()['incident_key'],)
