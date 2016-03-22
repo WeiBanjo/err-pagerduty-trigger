@@ -1,0 +1,9 @@
+[Core]
+Name = PagerDutyTrigger
+Module = pagertrigger
+
+[Documentation]
+Description = A plugin for triggering PagerDuty
+
+[Python]
+Version = 2
