@@ -33,7 +33,6 @@ class PagerDutyTrigger(BotPlugin):
         Triggers when the configuration is checked, shortly before activation
         You should delete it if you're not using it to override any default behaviour
         """
-        super(BotPlugin, self).check_configuration()
 
     def callback_connect(self):
         """
@@ -71,10 +70,12 @@ class PagerDutyTrigger(BotPlugin):
                 'message': " ".join(args)
             }
         }
-        response = requests.post(PAGERDUTY_API, data=json.dumps(body))
-        if response.status_code in (200,):
-            return "Triggered incident %s" % (response.json()['incident_key'],)
-        else:
-            logging.error("[PagerDuty] Non-200 response: %s" % response.status_code)
-            logging.error("[PagerDuty] Body: %s" % response.json())
-            return "Something went wrong."
+        return json.dumps(body)
+
+        # response = requests.post(PAGERDUTY_API, data=json.dumps(body))
+        # if response.status_code in (200,):
+        #     return "Triggered incident %s" % (response.json()['incident_key'],)
+        # else:
+        #     logging.error("[PagerDuty] Non-200 response: %s" % response.status_code)
+        #     logging.error("[PagerDuty] Body: %s" % response.json())
+        #     return "Something went wrong."
