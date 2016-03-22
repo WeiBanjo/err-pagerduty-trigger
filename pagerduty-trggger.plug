@@ -6,4 +6,4 @@ Module = pagertrigger
 Description = A plugin for triggering PagerDuty
 
 [Python]
-Version = 2
+Version = 2+

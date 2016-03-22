@@ -5,7 +5,7 @@ import requests
 from errbot import BotPlugin, botcmd
 
 
-class PagerDuty(BotPlugin):
+class PagerDutyTrigger(BotPlugin):
 
     def activate(self):
         """
