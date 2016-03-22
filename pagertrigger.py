@@ -33,6 +33,7 @@ class PagerDutyTrigger(BotPlugin):
         Triggers when the configuration is checked, shortly before activation
         You should delete it if you're not using it to override any default behaviour
         """
+        pass
 
     def callback_connect(self):
         """
